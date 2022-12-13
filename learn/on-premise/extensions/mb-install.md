@@ -23,16 +23,7 @@ kubectl version
 - Downnload helm package from the given link shared by WaveMaker support team.
 
 ```bash
-helm command //TODO
-```
-
-
-### Check sha1sum 
-
-- Verify SHA1SUM of downloaded file with the SHA1SUM given by WaveMaker support
-
-```bash
-sha1sum command //TODO
+cat <Service-Account> | helm registry login -u _json_key_base64 --password-stdin https://us-east4-docker.pkg.dev
 ```
 
 ### Namespace creation
@@ -48,7 +39,7 @@ kubectl create ns mockingbird
 - Login to docker with JSON Key provided by WaveMaker support
 
 ```bash
-//TODO command
+cat <Service-Account> | docker login -u KEY-TYPE --password-stdin https://us-east4-docker.pkg.dev
 ```
 
 ### Create K8s secrets
