@@ -13,5 +13,5 @@ Integrate Mockingbird with WME Platform
 - Example ["1.2.3.4/32", "1.2.3.5/24"]
 
 ```bash
-apimock-ingress-nginx.controller.service.loadBalancerSourceRanges: [WHITELIST-IP-RANGE] --reuse-values
+helm upgrade mockingbird [HELM-PACKAGE] -n mockingbird --set apimock-ingress-nginx.controller.service.loadBalancerSourceRanges: [WHITELIST-IP-RANGE]
 ```  

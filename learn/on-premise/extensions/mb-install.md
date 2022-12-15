@@ -23,7 +23,8 @@ kubectl version
 - Downnload helm package from the given link shared by WaveMaker support team.
 
 ```bash
-cat <Service-Account> | helm registry login -u _json_key_base64 --password-stdin https://us-east4-docker.pkg.dev
+cat <Service-Account-File> | helm registry login -u _json_key_base64 --password-stdin https://us-east4-docker.pkg.dev
+helm pull oci://us-east4-docker.pkg.dev/api-mock-server-332212/mockingbird/helm-charts/api-mock-server --version [MOCKINGBIRD-VERSION]
 ```
 
 ### Namespace creation
@@ -44,22 +45,44 @@ cat <Service-Account> | docker login -u KEY-TYPE --password-stdin https://us-eas
 
 ### Create K8s secrets
 
-- Create image pull secrets after replacing Directory-Path-to-CONFIG-JSON path //TODO
+- Create image pull secrets after replacing Directory-Path-to-CONFIG-JSON path, by default path is $HOME/.docker/config.json
+
 ```bash Command
 kubectl create secret generic mb-image-pull-secret --from-file=.dockerconfigjson=[Directory-Path-to-CONFIG-JSON]/config.json --type=kubernetes.io/dockerconfigjson -n mockingbird
 ```
 
 - Create SSL cert secret with CERT_PRIVATE_KEY_FILE and CERT_FILE replaced with path values.
+
 ```bash
 kubectl create secret tls mb-ssl-secret --key ${CERT_PRIVATE_KEY_FILE} --cert ${CERT_FILE}
 ```
 
+### Create K8s configmap
+
+- Create configmap yaml file with this code snippet and replace the MOCKINGBIRD-DOMAIN and MOCKINGBIRD-STATIC-IP
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mockingbird-cm
+  namespace: mockingbird
+data:
+  domainName=[MOCKINGBIRD-DOMAIN]
+  loadBalancerIP=[MOCKINGBIRD-STATIC-IP]
+```
+- Create the configmap with this command
+
+```bash
+kubectl apply -f configmap.yaml  -n mockingbird
+```
+
 #### Install Helm Chart
 
-- Run helm command to install chart for MockingBird Platform by replacing HELM-PACKAGE and MOCKINGBIRD-DOMAIN
+- Run helm command to install chart for MockingBird Platform by replacing HELM-PACKAGE
 
 ```bash 
-helm install mockingbird [HELM-PACKAGE] -n mockingbird --set "global.domainName=[MOCKINGBIRD-DOMAIN]" --set "apimock-ingress-nginx.controller.service.loadBalancerIP=[MOCKINGBIRD-STATIC-IP]"
+helm install mockingbird [HELM-PACKAGE] -n mockingbird
 ```  
 
 ### Map domain to Static IP reserved for MockingBird
