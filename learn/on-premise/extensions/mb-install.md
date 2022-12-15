@@ -27,6 +27,15 @@ cat <Service-Account-File> | helm registry login -u _json_key_base64 --password-
 helm pull oci://us-east4-docker.pkg.dev/api-mock-server-332212/mockingbird/helm-charts/api-mock-server --version [MOCKINGBIRD-VERSION]
 ```
 
+### Check sha1sum 
+
+- Verify SHA1SUM of downloaded file with the SHA1SUM given by WaveMaker support
+
+```bash
+sha1sum api-mock-server-[MOCKINGBIRD-VERSION].tgz 
+```
+
+
 ### Namespace creation
 
 - Create a new namespace 
