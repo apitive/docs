@@ -39,9 +39,9 @@ storageclass.yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-	name: mockingbird-sc
+  name: mockingbird-sc
 parameters:
-	type: pd-standard
+  type: pd-standard
 provisioner: kubernetes.io/gce-pd
 allowVolumeExpansion: true
 reclaimPolicy: Retain
@@ -63,93 +63,92 @@ servicestorage.yaml
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-	name: pv-k8s-mbe-redis-data
+  name: pv-k8s-mbe-redis-data
 spec:
-	storageClassName: "mockingbird-sc"
-	capacity:
-	storage: 50Gi
-	accessModes:
-	- ReadWriteOnce
-	claimRef:
-	namespace: mockingbird
-	name: pv-claim-k8s-mbe-redis-data
-	gcePersistentDisk:
-	pdName: k8s-mbe-redis-data
+  storageClassName: "mockingbird-sc"
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce
+  claimRef:
+    namespace: mockingbird
+    name: pv-claim-k8s-mbe-redis-data
+  gcePersistentDisk:
+    pdName: k8s-mbe-redis-data
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-	name: pv-claim-k8s-mbe-redis-data
-	namespace: mockingbird
+  name: pv-claim-k8s-mbe-redis-data
+  namespace: mockingbird
 spec:
-	storageClassName: "mockingbird-sc"
-	accessModes:
-	- ReadWriteOnce
-	resources:
-	requests:
-		storage: 50Gi
+  storageClassName: "mockingbird-sc"
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-k8s-mbe-swagger-json-data
+spec:
+  storageClassName: "mockingbird-sc"
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce
+  claimRef:
+    namespace: mockingbird
+    name: pv-claim-k8s-mbe-swagger-json-data
+  gcePersistentDisk:
+    pdName: k8s-mbe-swagger-json-data
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pv-claim-k8s-mbe-swagger-json-data
+  namespace: mockingbird
+spec:
+  storageClassName: "mockingbird-sc"
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
 ---
 
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-	name: pv-k8s-mbe-swagger-json-data
+  name: pv-k8s-mbe-tomcat-logs-data
 spec:
-	storageClassName: "mockingbird-sc"
-	capacity:
-	storage: 50Gi
-	accessModes:
-	- ReadWriteOnce
-	claimRef:
-	namespace: mockingbird
-	name: pv-claim-k8s-mbe-swagger-json-data
-	gcePersistentDisk:
-	pdName: k8s-mbe-swagger-json-data
+  storageClassName: "mockingbird-sc"
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce
+  claimRef:
+    namespace: mockingbird
+    name: pv-claim-k8s-mbe-tomcat-logs-data
+  gcePersistentDisk:
+    pdName: k8s-mbe-tomcat-logs-data
 ---
 
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-	name: pv-claim-k8s-mbe-swagger-json-data
-	namespace: mockingbird
+  name: pv-claim-k8s-mbe-tomcat-logs-data
+  namespace: mockingbird
 spec:
-	storageClassName: "mockingbird-sc"
-	accessModes:
-	- ReadWriteOnce
-	resources:
-	requests:
-		storage: 50Gi
----
-
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-	name: pv-k8s-mbe-tomcat-logs-data
-spec:
-	storageClassName: "mockingbird-sc"
-	capacity:
-	storage: 50Gi
-	accessModes:
-	- ReadWriteOnce
-	claimRef:
-	namespace: mockingbird
-	name: pv-claim-k8s-mbe-tomcat-logs-data
-	gcePersistentDisk:
-	pdName: k8s-mbe-tomcat-logs-data
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-	name: pv-claim-k8s-mbe-tomcat-logs-data
-	namespace: mockingbird
-spec:
-	storageClassName: "mockingbird-sc"
-	accessModes:
-	- ReadWriteOnce
-	resources:
-	requests:
-		storage: 50Gi
+  storageClassName: "mockingbird-sc"
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
 ```
 			  
 - Create PV's and PVC's with this command
