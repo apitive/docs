@@ -66,24 +66,19 @@ kubectl create secret generic mb-image-pull-secret --from-file=.dockerconfigjson
 kubectl create secret tls mb-ssl-secret --key ${CERT_PRIVATE_KEY_FILE} --cert ${CERT_FILE}
 ```
 
-### Create K8s configmap
+### Create one time setup values yaml
 
-- Create configmap yaml file with this code snippet and replace the MOCKINGBIRD-DOMAIN and MOCKINGBIRD-STATIC-IP
+- Create values yaml file with this code snippet and replace the MOCKINGBIRD-DOMAIN and MOCKINGBIRD-STATIC-IP
+
+one-time-setup-values.yaml
 
 ```yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: mockingbird-cm
-  namespace: mockingbird
-data:
-  domainName=[MOCKINGBIRD-DOMAIN]
-  loadBalancerIP=[MOCKINGBIRD-STATIC-IP]
-```
-- Create the configmap with this command
-
-```bash
-kubectl apply -f configmap.yaml  -n mockingbird
+global:
+  domainName: [MOCKINGBIRD-DOMAIN]
+apimock-ingress-nginx:
+  controller:
+    service:
+      loadBalancerIP: [MOCKINGBIRD-STATIC-IP]
 ```
 
 #### Install Helm Chart
@@ -91,7 +86,7 @@ kubectl apply -f configmap.yaml  -n mockingbird
 - Run helm command to install chart for MockingBird Platform by replacing HELM-PACKAGE
 
 ```bash 
-helm install mockingbird [HELM-PACKAGE] -n mockingbird
+helm install mockingbird [HELM-PACKAGE] -n mockingbird -f one-time-setup-values.yaml
 ```  
 
 ### Map domain to Static IP reserved for MockingBird
