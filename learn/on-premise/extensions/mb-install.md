@@ -24,6 +24,8 @@ kubectl version
 
 ```bash
 cat <Service-Account-File> | helm registry login -u _json_key_base64 --password-stdin https://us-east4-docker.pkg.dev
+```
+```bash
 helm pull oci://us-east4-docker.pkg.dev/api-mock-server-332212/mockingbird/helm-charts/api-mock-server --version [MOCKINGBIRD-VERSION]
 ```
 
@@ -49,7 +51,7 @@ kubectl create ns mockingbird
 - Login to docker with JSON Key provided by WaveMaker support
 
 ```bash
-cat <Service-Account> | docker login -u KEY-TYPE --password-stdin https://us-east4-docker.pkg.dev
+cat <Service-Account> | docker login -u _json_key_base64 --password-stdin https://us-east4-docker.pkg.dev
 ```
 
 ### Create K8s secrets
@@ -63,7 +65,7 @@ kubectl create secret generic mb-image-pull-secret --from-file=.dockerconfigjson
 - Create SSL cert secret with CERT_PRIVATE_KEY_FILE and CERT_FILE replaced with path values.
 
 ```bash
-kubectl create secret tls mb-ssl-secret --key ${CERT_PRIVATE_KEY_FILE} --cert ${CERT_FILE}
+kubectl create secret tls mb-ssl-secret --key ${CERT_PRIVATE_KEY_FILE} --cert ${CERT_FILE} -n mockingbird
 ```
 
 ### Create one time setup values yaml
