@@ -13,7 +13,7 @@ sidebar_label: "Integrate MockingBird Platform with WME"
 - Replace [HELM-PATCH-PACKAGE] with the helm package name of new release or patch release after download
 
 ```bash 
-helm upgrade mockingbird [HELM-PATCH-PACKAGE] -n mockingbird -f one-time-setup-values.yaml"
+helm upgrade mockingbird [HELM-PATCH-PACKAGE] -n mockingbird -f one-time-setup-values.yaml
 ```  
 
 ### RoleBack MockingBird setup
